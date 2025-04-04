@@ -10,18 +10,18 @@ interface LibraryHeaderProps {
 
 const LibraryHeader = ({ searchTerm, setSearchTerm }: LibraryHeaderProps) => {
   return (
-    <header className="library-header py-16 px-4 md:px-8 text-center relative">
+    <header className="library-header min-h-screen flex items-center justify-center py-16 px-4 md:px-8 text-center relative">
       <div className="absolute top-4 right-4">
         <ThemeToggle />
       </div>
       <div className="max-w-5xl mx-auto">
-        <h1 className="text-4xl md:text-5xl font-bold mb-4 font-martel">
+        <h1 className="text-5xl md:text-7xl font-bold mb-6 font-martel">
           हिंदी कथा पुस्तकालय
         </h1>
-        <h2 className="text-xl md:text-2xl font-light mb-8 font-poppins">
+        <h2 className="text-2xl md:text-3xl font-light mb-8 font-poppins">
           Hindi Literature Virtual Library
         </h2>
-        <p className="mb-8 max-w-2xl mx-auto font-poppins">
+        <p className="mb-8 max-w-2xl mx-auto font-poppins text-lg">
           Explore a curated collection of classic and contemporary Hindi literature. 
           Discover stories, novels, plays and poetry from renowned Hindi authors.
         </p>
