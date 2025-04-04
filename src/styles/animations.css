@@ -1,0 +1,12 @@
+@keyframes slideRightToLeft {
+  0% {
+    right: -100%;
+  }
+  100% {
+    right: 100%;
+  }
+}
+
+.animate-slide-right-to-left {
+  animation: slideRightToLeft 30s linear infinite;
+} 
