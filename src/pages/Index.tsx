@@ -52,40 +52,42 @@ const Index = () => {
       <LibraryHeader searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
       
       <main className="flex-grow library-pattern dark:bg-hindi-bg-dark">
-        <FilterBar
-          selectedGenres={selectedGenres}
-          setSelectedGenres={setSelectedGenres}
-          selectedAuthors={selectedAuthors}
-          setSelectedAuthors={setSelectedAuthors}
-          resetFilters={resetFilters}
-        />
+        <div className="max-w-7xl mx-auto px-4 py-16">
+          <FilterBar
+            selectedGenres={selectedGenres}
+            setSelectedGenres={setSelectedGenres}
+            selectedAuthors={selectedAuthors}
+            setSelectedAuthors={setSelectedAuthors}
+            resetFilters={resetFilters}
+          />
 
-        <div className="max-w-7xl mx-auto px-4 py-8">
-          {filteredBooks.length === 0 ? (
-            <div className="text-center py-12">
-              <h2 className="text-2xl font-bold mb-2 font-martel">No results found</h2>
-              <p className="text-muted-foreground">No books found matching your search criteria.</p>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={resetFilters}
-                className="h-8"
-              >
-                Clear all filters
-              </Button>
-            </div>
-          ) : (
-            <>
-              <h2 className="text-2xl font-bold mb-6 font-martel">
-                Books ({filteredBooks.length})
-              </h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                {filteredBooks.map(book => (
-                  <BookCard key={book.id} book={book} />
-                ))}
+          <div className="mt-12">
+            {filteredBooks.length === 0 ? (
+              <div className="text-center py-12">
+                <h2 className="text-2xl font-bold mb-2 font-martel">No results found</h2>
+                <p className="text-muted-foreground">No books found matching your search criteria.</p>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={resetFilters}
+                  className="h-8"
+                >
+                  Clear all filters
+                </Button>
               </div>
-            </>
-          )}
+            ) : (
+              <>
+                <h2 className="text-2xl font-bold mb-6 font-martel">
+                  Books ({filteredBooks.length})
+                </h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                  {filteredBooks.map(book => (
+                    <BookCard key={book.id} book={book} />
+                  ))}
+                </div>
+              </>
+            )}
+          </div>
         </div>
       </main>
       
