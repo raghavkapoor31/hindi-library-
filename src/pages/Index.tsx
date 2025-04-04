@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { books } from "@/data/books";
 import BookCard from "@/components/BookCard";
 import LibraryHeader from "@/components/LibraryHeader";
@@ -11,11 +11,38 @@ const Index = () => {
   const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
   const [selectedAuthors, setSelectedAuthors] = useState<string[]>([]);
   const [filteredBooks, setFilteredBooks] = useState(books);
+  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   const resetFilters = () => {
     setSelectedGenres([]);
     setSelectedAuthors([]);
   };
+
+  useEffect(() => {
+    // Handle video loading and playback
+    const video = videoRef.current;
+    if (video) {
+      video.load();
+      const playVideo = () => {
+        video.play().catch(error => {
+          console.error("Video playback failed:", error);
+        });
+      };
+
+      video.addEventListener("loadeddata", () => {
+        setIsVideoLoaded(true);
+        playVideo();
+      });
+
+      // Try to play immediately in case the video is already loaded
+      playVideo();
+
+      return () => {
+        video.removeEventListener("loadeddata", () => setIsVideoLoaded(true));
+      };
+    }
+  }, []);
 
   useEffect(() => {
     let result = books;
@@ -49,9 +76,28 @@ const Index = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-[#F9F7F5] dark:bg-hindi-bg-dark">
+      {/* Video Background */}
+      <div className="fixed top-0 left-0 w-full h-full -z-10 overflow-hidden">
+        <video
+          ref={videoRef}
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
+          className={`absolute min-w-full min-h-full object-cover transition-opacity duration-1000 ${
+            isVideoLoaded ? 'opacity-20 dark:opacity-10' : 'opacity-0'
+          }`}
+          onError={(e) => console.error("Video error:", e)}
+        >
+          <source src="/videos/background.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      </div>
+
       <LibraryHeader searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
       
-      <main className="flex-grow library-pattern dark:bg-hindi-bg-dark">
+      <main className="flex-grow library-pattern dark:bg-hindi-bg-dark/80 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 py-16">
           <FilterBar
             selectedGenres={selectedGenres}
